@@ -5,6 +5,9 @@ import telebot
 from telebot import types
 import logging
 from dotenv import load_dotenv
+import json
+from handler import superhandler
+
 
 # Database simulation (in a real app, you would use a proper database)
 from database import users, agents, balances
@@ -49,6 +52,11 @@ def webhook():
             update = telebot.types.Update.de_json(json_string)
             bot.process_new_updates([update])
             print("Update processed successfully")
+            data = json.loads(json_string)
+            text = data["message"]["text"]
+            print("recieved : ", text)
+            superhandler(text)
+            print("superhandler called succesfully ")
             return jsonify({'status': 'ok'})
         except Exception as e:
             print(f"Error processing update: {str(e)}")
