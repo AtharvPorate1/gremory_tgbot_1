@@ -1,3 +1,4 @@
+# app.py
 import os
 from flask import Flask, request, jsonify
 import telebot
@@ -28,7 +29,7 @@ if not BOT_TOKEN:
 
 bot = telebot.TeleBot(BOT_TOKEN)
 WEBHOOK_URL = os.getenv('WEBHOOK_URL', 'https://your-domain.com/webhook')
-print(f"Using webhook URL: {WEBHOOK_URL}")
+print(WEBHOOK_URL)
 
 # Set webhook
 @app.route('/set_webhook', methods=['GET'])
@@ -38,29 +39,23 @@ def set_webhook():
     return "Webhook set"
 
 # Process webhook
+
 @app.route('/webhook', methods=['POST'])
 def webhook():
     if request.headers.get('content-type') == 'application/json':
         try:
             json_string = request.get_data().decode('utf-8')
-            logger.info(f"Received webhook data: {json_string}")  # Log raw data for inspection
-            
-            # Parse the JSON data
+            print(f"Received webhook data: {json_string}")  # Print raw data for inspection
             update = telebot.types.Update.de_json(json_string)
-            if update:
-                logger.info(f"Successfully parsed update: {update}")
-                bot.process_new_updates([update])
-                logger.info("Update processed successfully")
-                return jsonify({'status': 'ok'})
-            else:
-                logger.error("Failed to parse update")
-                return jsonify({'status': 'error', 'message': 'Failed to parse update'})
+            bot.process_new_updates([update])
+            print("Update processed successfully")
+            return jsonify({'status': 'ok'})
         except Exception as e:
-            logger.error(f"Error processing update: {str(e)}")
+            print(f"Error processing update: {str(e)}")
             # Return 200 even if there's an error to prevent Telegram from retrying
             return jsonify({'status': 'error', 'error': str(e)})
     else:
-        logger.error(f"Invalid content-type: {request.headers.get('content-type')}")
+        print(f"Invalid content-type: {request.headers.get('content-type')}")
         return jsonify({'status': 'error', 'message': 'Invalid content-type'})
 
 # Start command handler
@@ -89,7 +84,6 @@ def start(message):
             logger.info(f"Welcome message sent to {message.chat.id}")
         except Exception as e:
             logger.error(f"Error sending welcome message: {str(e)}")
-
 # Handle 'Connect' button
 @bot.message_handler(func=lambda message: message.text == 'Connect')
 def request_email(message):
@@ -273,15 +267,15 @@ def help_command(message):
 # Handle unknown commands/messages
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def echo_all(message):
-    logger.info(f"Received message: {message.text} from {message.chat.id}")
+    print(f"Received message: {message.text} from {message.chat.id}")
     try:
         bot.reply_to(message, "I received your message")
-        logger.info("Reply sent successfully")
+        print("Reply sent successfully")
     except Exception as e:
-        logger.error(f"Error sending reply: {str(e)}")
+        print(f"Error sending reply: {str(e)}")
 
 # Run the app
 if __name__ == '__main__':
     # Run Flask app
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port)
