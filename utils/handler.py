@@ -21,7 +21,7 @@ def superhandler(text):
         try:
             bot.send_message(
                 "5284739416",
-                "Welcome to the Liquidity Management Bot! To get started, please connect your account.",
+                "Welcome to the Liquidity Management Bot! To get started, please connect your account. your name is atahrv",
             )
             logger.info("Welcome message sent to 5284739416")
         except Exception as e:
