@@ -55,7 +55,18 @@ def webhook():
             data = json.loads(json_string)
             text = data["message"]["text"]
             print("recieved : ", text)
+
+            ####
+
+
+
             superhandler(text)
+
+
+
+######
+
+
             print("superhandler called succesfully ")
             return jsonify({'status': 'ok'})
         except Exception as e:
@@ -71,7 +82,7 @@ def webhook():
 
 
 
-x
+
 ### The code below should be converted to functions and used appropriately
 
 
