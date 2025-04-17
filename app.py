@@ -6,7 +6,7 @@ from telebot import types
 import logging
 from dotenv import load_dotenv
 import json
-from handler import superhandler
+from utils.handler import superhandler
 
 
 # Database simulation (in a real app, you would use a proper database)
@@ -65,6 +65,16 @@ def webhook():
     else:
         print(f"Invalid content-type: {request.headers.get('content-type')}")
         return jsonify({'status': 'error', 'message': 'Invalid content-type'})
+
+
+
+
+
+
+
+### The code below should be converted to functions and used appropriately
+
+
 
 # Start command handler
 @bot.message_handler(commands=['start'])
