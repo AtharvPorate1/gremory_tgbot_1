@@ -41,3 +41,29 @@ POOL_INFO_TEMPLATE = """🔹 *[{name}]({dex_link})*
 - Market Cap: ${market_cap:,.2f}
 - 24h Volume: ${volume_24h:,.2f}
 """
+
+
+TOKEN_INFO_TEMPLATE = """*{name} | {symbol} | {address}*
+
+[Explorer]({explorer_url}) | [Dexscreener]({dexscreener_url})
+
+*Price:* ${price:,.5f}
+*Mcap:* ${mcap:,.3f}M
+
+*Fee_TVL ratio:*
+30m: {price_30m}%, 1h: {price_1h}%, 4h: {price_4h}%, 24h: {price_24h}%
+
+*Volume Stats:*
+30m: ${volume_30m}K, 1h: ${volume_1h}K, 4h: ${volume_4h}K, 24h: ${volume_24h}M
+
+*Wallet balance:* {balance} {symbol} (${balance_value})
+"""
+
+# Button texts
+OPEN_POSITION = "📈 Open Position"
+BUY_1_SOL = "🛒 Buy 1 SOL"
+BUY_X_SOL = "💵 Buy X SOL"
+SELL_50 = "💰 Sell 50%"
+SELL_100 = "💸 Sell 100%"
+CLOSE = "❌ Close"
+REFRESH = "🔄 Refresh"
