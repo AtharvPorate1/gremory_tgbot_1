@@ -1,0 +1,57 @@
+{
+    "message": "User created successfully",
+    "user": {
+        "id": "6d7aa9d1-7eff-4302-a84a-6feb78b5d717",
+        "username": "saraman_ap",
+        "tgId": "5284739416",
+        "agentId": "a9c7d9a2-d57e-4b19-89f0-906afd93139c",
+        "createdAt": "2025-05-25T00:52:36.672Z",
+        "updatedAt": "2025-05-25T00:52:36.672Z",
+        "agent": {
+            "id": "a9c7d9a2-d57e-4b19-89f0-906afd93139c",
+            "name": "dependent_lavender_chinchilla",
+            "link": "/agent/dependent_lavender_chinchilla",
+            "deploymentUrl": "https://agent-dependentlavender_chinchilla.vercel.app",
+            "walletId": "vfkkw1qcmzlubg2uim3wr843",
+            "createdAt": "2025-05-25T00:52:36.163Z",
+            "updatedAt": "2025-05-25T00:52:36.163Z",
+            "wallet": {
+                "id": "vfkkw1qcmzlubg2uim3wr843",
+                "hashedPKey": "BM3zUH9PP2v8jd21pp74AHO0+69scQEY2ZgU0jaH91p3VR5wy+/w0VB/rlZtcOeVaHHStXEM6jn7Ltq6/dfA4KQ=",
+                "publicKey": "0EvUQzUdWCrUrRT30kZKjvJltCSll1sgHZFdX5UFnxQQmJmx/FokOxApGrzH7/a5FMWtCim8ouVCp4cQ0U2n0FR3wt04ES1zDgWuI89v24VZvDw+5eY+liINbxYNpEIN06YlTedvtec=",
+                "address": "FEZ9iQRnDBAWkj6dV47EKoB3L289s659PGr7CmV9j3Wa",
+                "chainType": "solana",
+                "createdAt": "2025-05-25T00:52:35.719Z",
+                "updatedAt": "2025-05-25T00:52:35.719Z"
+            }
+        }
+    },
+    "agent": {
+        "id": "a9c7d9a2-d57e-4b19-89f0-906afd93139c",
+        "name": "dependent_lavender_chinchilla",
+        "link": "/agent/dependent_lavender_chinchilla",
+        "deploymentUrl": "https://agent-dependentlavender_chinchilla.vercel.app",
+        "walletId": "vfkkw1qcmzlubg2uim3wr843",
+        "createdAt": "2025-05-25T00:52:36.163Z",
+        "updatedAt": "2025-05-25T00:52:36.163Z",
+        "wallet": {
+            "id": "vfkkw1qcmzlubg2uim3wr843",
+            "hashedPKey": "BM3zUH9PP2v8jd21pp74AHO0+69scQEY2ZgU0jaH91p3VR5wy+/w0VB/rlZtcOeVaHHStXEM6jn7Ltq6/dfA4KQ=",
+            "publicKey": "0EvUQzUdWCrUrRT30kZKjvJltCSll1sgHZFdX5UFnxQQmJmx/FokOxApGrzH7/a5FMWtCim8ouVCp4cQ0U2n0FR3wt04ES1zDgWuI89v24VZvDw+5eY+liINbxYNpEIN06YlTedvtec=",
+            "address": "FEZ9iQRnDBAWkj6dV47EKoB3L289s659PGr7CmV9j3Wa",
+            "chainType": "solana",
+            "createdAt": "2025-05-25T00:52:35.719Z",
+            "updatedAt": "2025-05-25T00:52:35.719Z"
+        }
+    },
+    "wallet": {
+        "id": "vfkkw1qcmzlubg2uim3wr843",
+        "hashedPKey": "BM3zUH9PP2v8jd21pp74AHO0+69scQEY2ZgU0jaH91p3VR5wy+/w0VB/rlZtcOeVaHHStXEM6jn7Ltq6/dfA4KQ=",
+        "publicKey": "0EvUQzUdWCrUrRT30kZKjvJltCSll1sgHZFdX5UFnxQQmJmx/FokOxApGrzH7/a5FMWtCim8ouVCp4cQ0U2n0FR3wt04ES1zDgWuI89v24VZvDw+5eY+liINbxYNpEIN06YlTedvtec=",
+        "address": "FEZ9iQRnDBAWkj6dV47EKoB3L289s659PGr7CmV9j3Wa",
+        "chainType": "solana",
+        "createdAt": "2025-05-25T00:52:35.719Z",
+        "updatedAt": "2025-05-25T00:52:35.719Z"
+    },
+    "error": "Request failed with status 201"
+}

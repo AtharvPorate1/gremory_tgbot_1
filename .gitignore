@@ -1,5 +1,5 @@
 .env
-__pychache__
+__pychache__/
 handlers/__pychache__
 
 venv 
