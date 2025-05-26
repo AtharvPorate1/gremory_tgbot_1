@@ -207,7 +207,7 @@ async def execute_trade(query, token_address, amount, strategy):
                         f"Tx: {result.get('tx_hash', 'Not available')}\n"
                         f"Position: {result.get('position_address', 'Not available')}"
                     )
-                    await query.edit_message_text(text=success_message)
+                    # await query.edit_message_text(text=success_message)
                 else:
                     error_text = await resp.text()
                     error_message = (
