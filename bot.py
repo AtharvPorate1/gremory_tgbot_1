@@ -15,7 +15,7 @@ if __name__ == "__main__":
     # app.add_handler(CommandHandler("custom", custom_command))
     # Add this to where you register command handlers
     app.add_handler(CommandHandler("open", open_command))
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_token_message))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     app.add_handler(CallbackQueryHandler(token_button_callback))
 
 

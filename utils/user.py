@@ -54,3 +54,15 @@ async def create_new_user(tgId: str, username: str):
         with open("new_user_response.json", "w") as f:
             json.dump(error_resp, f, indent=4)
         return error_resp
+    
+
+async def get_agent_link(tgId: str):
+    print(f"Fetching agent link for user {tgId}")
+    url = f"http://localhost:3000/api/users/{tgId}/getagent"
+    headers = {
+        "Content-Type": "application/json"
+    }
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, headers=headers) as response:
+            return await response.json()
+        

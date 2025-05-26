@@ -1,12 +1,14 @@
 import requests
 
 def fetch_token_info(token_address):
+    # print(f"Fetching token info for: {token_address}")
     """Fetch token information from an API (placeholder implementation)"""
     url = f"https://dlmm-api.meteora.ag/pair/all_with_pagination?limit=1&search_term={token_address}"
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
         data = response.json()
+        # print(f"Response data: {data}")
         pairs = data.get("pairs", [])
         if not pairs:
             raise ValueError("No such pool found")
