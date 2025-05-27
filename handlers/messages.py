@@ -21,8 +21,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if context.user_data.get('awaiting_amount'):
         return await handle_amount_input(update, context)
     
+    await handle_token_message(update, context)
     # Otherwise, check for token address
-    if len(message_text) == 44 and message_text.isalnum():
-        await handle_token_message(update, context)
-    else:
-        await update.message.reply_text("❗️ Please enter a valid Solana token address (44 alphanumeric characters).")
+    # if len(message_text) == 44 and message_text.isalnum():
+    # if message_text.isalnum():
+    #     await handle_token_message(update, context)
+    # else:
+    #     await update.message.reply_text("❗️ Please enter a valid Solana token address (44 alphanumeric characters).")

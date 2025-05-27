@@ -30,17 +30,14 @@ Use /open to create your first position."""
 
 
 # Add this to handlers/templates.py
-TRENDING_POOLS_MESSAGE = """📊 *Top Trending Pools*
+TRENDING_POOLS_MESSAGE = """Enter CA or meteora link in bot chat or choose a token from the below trending list:
 
 {pool_list}
-
-Click on a pool name to select it.
 """
 
-POOL_INFO_TEMPLATE = """🔹 *[{name}]({dex_link})*
-- Market Cap: ${market_cap:,.2f}
-- 24h Volume: ${volume_24h:,.2f}
-"""
+POOL_INFO_TEMPLATE = """/[{index} {name}](https://t.me/cleopetra_bot?start=token_{token_address}) | Mcap: ${market_cap} | Volume 24h: ${volume_24h} | [Dex]({dex_link})"""
+
+
 
 
 TOKEN_INFO_TEMPLATE = """*{name} | {symbol} | {address}*

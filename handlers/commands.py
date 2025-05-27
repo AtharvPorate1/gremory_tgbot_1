@@ -4,7 +4,7 @@ from telegram.ext import ContextTypes
 from handlers.templates import WELCOME_EXISTING_USER, WELCOME_NEW_USER, WALLET_CREATED, TRENDING_POOLS_MESSAGE, POOL_INFO_TEMPLATE
 from utils.user import check_user_in_db, get_wallet_address, create_new_user
 from lib.wallet import get_sol_balance  # Assuming you have a function to get SOL balance
-from lib.meteora import get_trending_pools
+from lib.meteora import get_solana_meteora_pairs
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     tgId = update.effective_user.id
@@ -41,28 +41,41 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 
+
+
 async def open_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
-        # Get trending pools
-        pools = get_trending_pools()
+        # Get trending pools (Solana/Meteora only)
+        pairs = get_solana_meteora_pairs()
         
         # Format each pool's information
         pool_list = []
-        for pool in pools['pairs']:
-            # Calculate market cap (simplified as reserve_y_amount * current_price)
-            market_cap = pool['reserve_y_amount'] * pool['current_price']
+        for index, pair in enumerate(pairs, 1):
+            # Calculate market cap (price * supply - simplified)
+            # Note: You might need to adjust this calculation based on actual available data
+            market_cap = float(pair['priceUsd']) * 1000000  # Simplified example
+            
+            # Format numbers with K/M suffixes
+            def format_currency(value):
+                if value >= 1000000:
+                    return f"{value/1000000:.3f}M".replace(".000M", "M")
+                elif value >= 1000:
+                    return f"{value/1000:.3f}K".replace(".000K", "K")
+                return f"{value:.2f}"
             
             pool_info = POOL_INFO_TEMPLATE.format(
-                name=pool['name'],
-                dex_link="https://meteora.ag",  # Placeholder link
-                market_cap=market_cap,
-                volume_24h=pool['trade_volume_24h']
+                index=index,
+                name=pair['baseToken']['symbol'],
+                token_address=pair['baseToken']['address'],
+                market_cap=format_currency(market_cap),
+                volume_24h=format_currency(float(pair['txns']['h24']['buys']) * float(pair['priceUsd'])),  # Simplified volume calculation
+                dex_link=pair['url']
             )
             pool_list.append(pool_info)
         
         # Send the formatted message
         await update.message.reply_text(
-            TRENDING_POOLS_MESSAGE.format(pool_list="\n".join(pool_list)),
+            TRENDING_POOLS_MESSAGE.format(pool_list="\n\n".join(pool_list)),
             parse_mode='Markdown',
             disable_web_page_preview=True
         )
@@ -72,3 +85,4 @@ async def open_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(
             "⚠️ Could not fetch trending pools. Please try again later."
         )
+

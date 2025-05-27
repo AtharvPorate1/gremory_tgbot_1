@@ -4,17 +4,14 @@ import requests
 from handlers.templates import TOKEN_INFO_TEMPLATE, OPEN_POSITION, BUY_1_SOL, BUY_X_SOL, SELL_50, SELL_100, CLOSE, REFRESH
 from utils.ca_finder import fetch_token_info
 from utils.user import get_agent_link
-import aiohttp
-from aiohttp import TCPConnector
-import ssl
-
+from lib.meteora import create_balanced_pool
 
 
 async def handle_token_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message_text = update.message.text.strip()
     print(f"Received message: {message_text}")
     # Check if the message looks like a token address
-    if len(message_text) == 44 and message_text.isalnum():
+    if message_text.isalnum():
         try:
             # Fetch token info from API
             print(f"Fetching token info for: {message_text}")
@@ -162,75 +159,24 @@ async def handle_strategy_selection(update: Update, context: ContextTypes.DEFAUL
         context.user_data.clear()
         
         # Execute the trade with collected parameters
-        await execute_trade(query, token_address, amount, strategy)
+        await execute_trade(update, context, query, token_address, amount, strategy)
 
-async def execute_trade(query, token_address, amount, strategy):
+async def execute_trade(update: Update, context: ContextTypes.DEFAULT_TYPE, query, token_address, amount, strategy):
+    chat_id = update.effective_chat.id  # Get the chat ID from update
     agent_link = await get_agent_link(query.from_user.id)
+    print(f"Agent link for user {query.from_user.id}: {agent_link}")
     pool_address = token_address
     
-    # Create SSL context that doesn't verify certificates
-    ssl_context = ssl.create_default_context()
-    ssl_context.check_hostname = False
-    ssl_context.verify_mode = ssl.CERT_NONE
+    await context.bot.send_message(
+    chat_id=chat_id,
+    text=f"📈 Opening a balanced position in the liquidity pool...\n\nPair address: `{token_address}`\nAmount: `{amount}`\nStrategy: `{strategy}`",
+    parse_mode='Markdown'
+)
 
-    # Build detailed prompt
-    prompt = (
-        f"Open {strategy} position in pool {pool_address} with {amount} SOL. "
-        f"Token: {token_address.split('-')[0] if '-' in token_address else token_address[:4]}. "
-        f"Strategy parameters: {get_strategy_params(strategy)}"
-    )
+
+    await create_balanced_pool(token_address=pool_address,
+                                amount=amount, api_url=f'{agent_link["agentLink"]}/api/agent/add-liquidity')
     
-    payload = {
-        "prompt": prompt,
-        "metadata": {
-            "action": "open_position",
-            "amount_sol": amount,
-            "strategy": strategy,
-            "pool_address": pool_address
-        }
-    }
-    
-    try:
-        # Create custom connector with our SSL context
-        connector = TCPConnector(ssl=ssl_context)
-        
-        async with aiohttp.ClientSession(connector=connector) as session:
-            async with session.post(
-                f'{agent_link["agentLink"]}/api/agent/prompt',
-                json=payload,
-                timeout=aiohttp.ClientTimeout(total=30)
-            ) as resp:
-                if resp.status == 200:
-                    result = await resp.json()
-                    success_message = (
-                        f"✅ Successfully opened {strategy} position with {amount} SOL!\n"
-                        f"Tx: {result.get('tx_hash', 'Not available')}\n"
-                        f"Position: {result.get('position_address', 'Not available')}"
-                    )
-                    # await query.edit_message_text(text=success_message)
-                else:
-                    error_text = await resp.text()
-                    error_message = (
-                        f"❌ Failed to open position (Status: {resp.status}).\n"
-                        f"Error: {error_text[:200]}"  # Truncate long error messages
-                    )
-                    await query.edit_message_text(text=error_message)
-                    
-    except aiohttp.ClientError as e:
-        error_message = (
-            f"⚠️ Network error executing trade:\n"
-            f"{str(e)}\n\n"
-            f"Please try again later."
-        )
-        await query.edit_message_text(text=error_message)
-        
-    except Exception as e:
-        error_message = (
-            f"⚠️ Unexpected error executing trade:\n"
-            f"{str(e)}\n\n"
-            f"Please contact support if this persists."
-        )
-        await query.edit_message_text(text=error_message)
 
 
 
