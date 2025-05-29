@@ -35,7 +35,7 @@ TRENDING_POOLS_MESSAGE = """Enter CA or meteora link in bot chat or choose a tok
 {pool_list}
 """
 
-POOL_INFO_TEMPLATE = """/[{index} {name}](https://t.me/cleopetra_bot?start=token_{token_address}) | Mcap: ${market_cap} | Volume 24h: ${volume_24h} | [Dex]({dex_link})"""
+POOL_INFO_TEMPLATE = """/[{index} {name}](https://t.me/gbt_1bot?start=token_{token_address}) | Mcap: ${market_cap} | Volume 24h: ${volume_24h} | [Dex]({dex_link})"""
 
 
 
