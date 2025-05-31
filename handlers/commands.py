@@ -86,3 +86,9 @@ async def open_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "⚠️ Could not fetch trending pools. Please try again later."
         )
 
+
+
+async def show_positions_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    tgId = update.effective_user.id
+   
+    await update.message.reply_text("This feature is under development. Stay tuned!")
